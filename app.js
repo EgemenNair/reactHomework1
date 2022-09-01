@@ -7,8 +7,11 @@ export default async function getData(userID) {
     try {
         // Allow only number input type;
         (typeof(userID) === "number") ? console.log(`Data type is ${typeof(userID)}.`) : (function() {throw `Data type is ${typeof(userID)}`} )();
-        
-    } catch (error) {
-        console.log(`Error: ${error}`);
+        // Use axios to get json data and return the data;
+        const {data: USER} = await axios(`https://jsonplaceholder.typicode.com/users/${userID}`);
+        const {data: USER_POSTS} = await axios(`https://jsonplaceholder.typicode.com/posts?userId=${userID}`);
+        return {USER, USER_POSTS}
+    } catch (err) {
+        console.log(`Error: ${err}`);
     };
 };
